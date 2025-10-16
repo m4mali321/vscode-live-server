@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>🎶 لیست پخش آهنگ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background-image: url('img/shir.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+      direction: rtl;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: -1;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      background-color: rgba(213, 255, 251, 0.85);
+      padding: 30px;
+      border-radius: 20px;
+      display: inline-block;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 500px;
+    }
+
+    select {
+      padding: 10px 15px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    audio {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btn {
+     display: inline-block;
+  margin: 15px 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 30px;
+  background-color: #aaebff;
+  color: #b71818;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  font-style: italic;
+    }
+
+    .btn:hover {
+      background-color: #e76f3c;
+    }
+
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    #searchInput {
+      padding: 10px 15px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-left: 10px;
+      width: 200px;
+    }
+
+    .track-item {
+      background-color: rgba(164, 119, 146, 0.9);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease;
+      gap: 15px;
+    }
+
+    .track-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .track-image {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .track-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .track-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .track-title {
+      font-size: 1.1em;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .track-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .track-item span {
+      flex: 1;
+      text-align: right;
+      margin-left: 15px;
+    }
+
+    #trackList {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+.float-right {
+  float: right;
+  width: 30px;
+  margin-left: 10px;
+}
+.float-right1 {
+  float: right;
+  width: 60px;
+  margin-left: 10px;
+}
+@media (max-width: 600px) {
+  body {
+    padding: 20px;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  select, .btn {
+    width: 100%;
+    font-size: 1em;
+  }
+}
+
+  
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>آهنگ های گلچین شده
+        <img src="img/logo.jpg" alt="تصویر لوگو" style="width:400px;height:200px;vertical-align:middle;">
+    </h1>
+    
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="جستجوی آهنگ...">
+      <button class="btn" onclick="searchTracks()">🔍 جستجو</button>
+    </div>
+
+    <div id="trackList">
+
+      <!-- لیست آهنگ‌ها اینجا نمایش داده می‌شود -->
+    </div>
+
+    <br>
+    <audio id="player" controls>
+      <source src="" type="audio/mp3">
+      مرورگر شما از پخش فایل صوتی پشتیبانی نمی‌کند.
+    </audio>
+
+    <br>
+    <div id="controls">
+      <button class="btn" onclick="playTrack()">▶️ پخش</button>
+      <button class="btn" onclick="pauseTrack()">⏸️ توقف</button>
+    </div>
+  </div>
+
+  <script>
+    const player = document.getElementById("player");
+    const searchInput = document.getElementById("searchInput");
+    const trackList = document.getElementById("trackList");
+
+    // لیست تمام آهنگ‌ها
+    const tracks = [
+      { id: 1, title: "تتلو /شایع", file: "music/music1.mp3", image: "img/tataloo and ashaye.jpg"},
+      { id: 2, title: "شادمهر عقیلی", file: "music/music2.mp3", image: "img/Shadmehr.webp" },
+      { id: 3, title: "سهیل", file: "music/music3.mp3", image: "img/Soheil.webp" }
+    ];
+
+    // نمایش لیست آهنگ‌ها
+    function displayTracks(tracksList) {
+      trackList.innerHTML = tracksList.map(track => `
+        <div class="track-item">
+          <div class="track-image">
+            <img src="${track.image}" alt="${track.title}" onerror="this.src='img/default-cover.jpg'">
+          </div>
+          <div class="track-info">
+            <span class="track-title">${track.title}</span>
+            <div class="track-buttons">
+              <button class="btn" onclick="selectTrack('${track.file}')"><img src="img/amoji.jpg" class="float-right">انتخاب</button>
+              <a class="btn" href="${track.file}" download><img src="img/downolad.jpg" class="float-right1">دانلود</a>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // جستجوی آهنگ‌ها
+    function searchTracks() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const filteredTracks = tracks.filter(track => 
+        track.title.toLowerCase().includes(searchTerm)
+      );
+      displayTracks(filteredTracks);
+    }
+
+    // انتخاب آهنگ برای پخش
+    function selectTrack(trackFile) {
+      player.src = trackFile;
+      player.play();
+    }
+
+    function playTrack() {
+      player.play();
+    }
+
+    function pauseTrack() {
+      player.pause();
+    }
+
+    // نمایش تمام آهنگ‌ها در ابتدای بارگذاری صفحه
+    displayTracks(tracks);
+  </script>
+</body>
+</html>
